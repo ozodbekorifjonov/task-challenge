@@ -1,0 +1,86 @@
+/* #region  /**=========== Ant Menu Item =========== */
+.ant-menu-item {
+  @apply !px-[1rem];
+}
+/* #endregion  /**=========== Ant Menu Item =========== */
+
+/* #region  /**=========== Ant Table  =========== */
+.ant-table-thead tr .ant-table-cell {
+  border-bottom: none !important;
+}
+
+.ant-table-tbody tr .ant-table-cell {
+  border-bottom: none !important;
+}
+
+.ant-table-tbody tr .ant-table-cell::before {
+  content: '';
+  @apply h-[1px] w-full bottom-0 left-0 absolute bg-neutral8;
+}
+
+.ant-table-thead tr .ant-table-cell:first-child {
+  border-radius: 0 0 0 1rem;
+}
+
+.ant-table-thead tr .ant-table-cell:last-child {
+  border-radius: 0 0 1rem 0;
+}
+
+.ant-table-tbody tr .ant-table-cell:first-child {
+  border-radius: 1rem 0 0 1rem;
+}
+
+.ant-table-tbody tr .ant-table-cell:last-child {
+  border-radius: 0 1rem 1rem 0;
+}
+/* #endregion  /**=========== Ant Table  =========== */
+
+/* #region  /**=========== Ant Form Item  =========== */
+.ant-form-item-control-input input {
+  @apply !text-p2;
+}
+
+.ant-form-item-control-input .ant-picker.ant-picker-range.ant-picker-small {
+  @apply p-[0.652rem] rounded-[0.7rem];
+}
+
+.ant-form-item-label label {
+  @apply w-full;
+}
+
+.ant-form-item-label label > .ant-form-item-tooltip {
+  @apply absolute right-0;
+}
+/* #endregion  /**=========== Ant Form Item  =========== */
+
+/* #region  /**=========== Ant Drawer  =========== */
+.ant-drawer .ant-drawer-footer {
+  @apply pb-6 px-6;
+}
+/* #endregion  /**=========== Ant Drawer  =========== */
+
+/* #region  /**=========== Ant Modal  =========== */
+.ant-modal-close:hover {
+  background-color: transparent !important;
+}
+
+.ant-modal-content {
+  @apply !p-8;
+}
+/* #endregion  /**=========== Ant Modal  =========== */
+
+/* #region  /**=========== Ant Checkbox  =========== */
+.ant-checkbox-wrapper::after {
+  height: 0;
+}
+/* #endregion  /**=========== Ant Checkbox  =========== */
+
+/* #region  /**=========== Ant Input Number  =========== */
+.hiddenCounter .ant-input-number-handler-wrap {
+  opacity: 0 !important;
+}
+
+.inputTextCenter .ant-input-number-input {
+  text-align: center;
+}
+/* #endregion  /**=========== Ant Input Number  =========== */

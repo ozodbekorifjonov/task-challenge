@@ -1,0 +1,13 @@
+.antdSegmentedSmall .ant-segmented-item .ant-segmented-item-label {
+  @apply tab-h3-medium flex items-center leading-[1.25rem] px-[1rem];
+}
+.antdSegmentedSmall .ant-segmented-item {
+  @apply py-[0.5rem];
+}
+
+.antdSegmentedLarge .ant-segmented-item .ant-segmented-item-label {
+  @apply tab-h3-medium px-[1rem];
+}
+.antdSegmentedLarge .ant-segmented-item {
+  @apply py-[0.5rem];
+}

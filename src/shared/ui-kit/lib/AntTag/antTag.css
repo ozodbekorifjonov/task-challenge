@@ -1,0 +1,20 @@
+.antTag {
+  --tag-color: #1ab759;
+  --tag-color-rgba: #e9f8ef;
+  color: var(--tag-color);
+  background: rgba(var(--tag-color-rgb), 0.1);
+  border: none;
+  border-radius: 6.25rem;
+}
+
+.antTag::before {
+  content: '';
+  position: relative;
+  width: 0.5rem;
+  height: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--tag-color);
+  border-radius: 100%;
+}

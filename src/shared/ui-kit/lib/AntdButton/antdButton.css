@@ -1,0 +1,27 @@
+.ant-btn.tertiary:hover {
+  @apply bg-neutral8;
+}
+
+.ant-btn.tertiary:disabled:hover {
+  @apply bg-gray100;
+}
+
+.ant-btn.ant-btn-dangerous.text {
+  @apply text-error100 hover:!text-error100 hover:!bg-error10;
+}
+
+.ant-btn.ant-btn-dangerous.ghost {
+  @apply text-error100 bg-error10 hover:!text-error100 hover:!bg-error20;
+}
+
+.ant-btn.ant-btn-dangerous.secondary {
+  @apply text-error100  hover:!text-error100 hover:!bg-error10 !border-error100;
+}
+
+.ant-btn.ant-btn-dangerous.primary {
+  @apply text-white100 !bg-error100  hover:!bg-error90;
+}
+
+.ant-space-compact > .relative {
+  @apply w-full;
+}
