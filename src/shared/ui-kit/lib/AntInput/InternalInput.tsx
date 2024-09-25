@@ -1,8 +1,6 @@
 import './antInput.css';
 import { forwardRef } from 'react';
 
-import { LoadingOutlined } from '@ant-design/icons';
-
 import { ConfigProvider, Input } from 'antd';
 
 import { inputTypographySizes } from './theme.ts';
@@ -31,11 +29,7 @@ const InternalInput: React.ForwardRefExoticComponent<IProps> = forwardRef(
             className={cn('antInput', inputTypographySizes[size], className)}
             {...rest}
           />
-          {rest?.loading && (
-            <LoadingOutlined
-              className={`absolute right-2 ${size === 'small' ? 'text-[0.5rem]' : ''}`}
-            />
-          )}
+          {rest?.loading && <div>Loading...</div>}
         </div>
       </ConfigProvider>
     );

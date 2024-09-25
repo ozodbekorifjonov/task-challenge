@@ -1,7 +1,7 @@
 import { Route } from 'react-router-dom';
+import React from 'react';
 
 import AuthRoute from './AuthRoute';
-import React from 'react';
 
 export interface IRoutes {
   path: string;

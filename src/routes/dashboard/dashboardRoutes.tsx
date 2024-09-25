@@ -5,7 +5,7 @@ import { dashboardRoutes } from './routes';
 import { renderRoutes } from '../renderRoutes';
 import AuthRoute from '../AuthRoute.tsx';
 
-const DashboardHome = lazy(() => import('../../app/dashboard/home'));
+const DashboardHome = lazy(() => import('../../app/dashboard/statistics'));
 
 export default function DashboardRoutes(): React.JSX.Element {
   return (

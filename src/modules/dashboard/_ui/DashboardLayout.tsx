@@ -1,9 +1,8 @@
-import { useIntl } from 'react-intl';
+import React from 'react';
 
 import { DASHBOARD_CONFIG } from '../_constants/dashboardConstants';
-
-import { Layout } from 'antd';
-import Sider from 'antd/es/layout/Sider';
+import { AntLayout } from '../../../shared/ui-kit';
+import AntSider from '../../../shared/ui-kit/lib/AntLayout/AntSider.tsx';
 
 type IProps = {
   children?: React.ReactNode;
@@ -12,11 +11,9 @@ type IProps = {
 export default function DashboardLayout({
   children,
 }: IProps): React.JSX.Element {
-  const { locale } = useIntl();
-
   return (
-    <Layout style={{ minHeight: '100vh' }} className='relative'>
-      <Sider
+    <AntLayout style={{ minHeight: '100vh' }} className='relative'>
+      <AntSider
         trigger={null}
         collapsible
         width={DASHBOARD_CONFIG.sidebarWidth}
@@ -30,13 +27,6 @@ export default function DashboardLayout({
         }}
         className='remove-scrollbar'
       >
-        <img
-          width={250}
-          height={65}
-          alt='logo-openmarket'
-          className='my-4 px-8 dashboard-logo w-full'
-          src={`/images/logo-${locale}.svg`}
-        />
         <div
           className='overflow-y-auto remove-scrollbar  relative'
           id='menuList'
@@ -44,11 +34,9 @@ export default function DashboardLayout({
             maxHeight: 'calc(100% - 136px)',
             minHeight: 'calc(100% - 136px)',
           }}
-        >
-          <div className='menuShadow'></div>
-        </div>
-      </Sider>
+        />
+      </AntSider>
       {children}
-    </Layout>
+    </AntLayout>
   );
 }

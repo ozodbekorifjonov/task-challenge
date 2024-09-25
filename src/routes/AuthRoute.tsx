@@ -21,7 +21,7 @@ const AuthRoute: React.FC<AuthRouteProps> = ({
   if (isAuthenticated !== forAuth) {
     return (
       <Navigate
-        to={isAuthenticated ? '/' : paths.auth.loginByEimzo}
+        to={isAuthenticated ? '/' : paths.auth.login}
         state={{ from: location }}
       />
     );
