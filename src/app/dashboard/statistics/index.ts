@@ -1,3 +1,3 @@
-import DashboardStatistics from './dashboardStatistics.tsx';
+import Statistics from './statistics.tsx';
 
-export default DashboardStatistics;
+export default Statistics;

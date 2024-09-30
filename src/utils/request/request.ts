@@ -57,16 +57,8 @@ const redirectBaseUrl = (baseUrl: string | undefined) => {
   }
 
   switch (baseUrl) {
-    case BaseUrl.Merchant:
-      return import.meta.env.VITE_BASE_API_URL + BaseUrl.Merchant;
-    case BaseUrl.TempMerchant:
-      return import.meta.env.VITE_BASE_TEMP_API_URL + BaseUrl.TempMerchant;
-    case BaseUrl.Global:
-      return import.meta.env.VITE_BASE_API_URL + BaseUrl.Global;
-    case BaseUrl.Sanctum:
-      return import.meta.env.VITE_BASE_API_URL + BaseUrl.Sanctum;
-    case BaseUrl.Frontend:
-      return import.meta.env.VITE_BASE_API_EIMZO_OPEN_URL + BaseUrl.Frontend;
+    case BaseUrl.Fred:
+      return import.meta.env.VITE_BASE_API_URL + BaseUrl.Fred;
     default:
       return baseUrl;
   }

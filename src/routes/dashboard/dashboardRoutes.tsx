@@ -4,12 +4,15 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { dashboardRoutes } from './routes';
 import { renderRoutes } from '../renderRoutes';
 import AuthRoute from '../AuthRoute.tsx';
+import DashboardLayout from '../../modules/dashboard/_ui';
 
-const DashboardHome = lazy(() => import('../../app/dashboard/statistics'));
+const DashboardHome = lazy(
+  () => import('../../app/dashboard/statistics/statistics.tsx'),
+);
 
 export default function DashboardRoutes(): React.JSX.Element {
   return (
-    <div>
+    <DashboardLayout>
       <React.Suspense fallback={null}>
         <Routes>
           <Route
@@ -20,6 +23,6 @@ export default function DashboardRoutes(): React.JSX.Element {
           <Route path='*' element={<Navigate to={'/dashboard'} />} />
         </Routes>
       </React.Suspense>
-    </div>
+    </DashboardLayout>
   );
 }
