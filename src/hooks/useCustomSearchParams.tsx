@@ -1,5 +1,4 @@
 import { useCallback, useRef } from 'react';
-
 import { useSearchParams as glSearchParams } from 'react-router-dom';
 
 type ISet<T = string> = (key: T, value: string | number | null) => void;
@@ -16,29 +15,32 @@ type IGet<T = string | string[]> = (key: T) => Record<string, string | null>;
 
 const useCustomSearchParams = () => {
   const [searchParams, setSearchParams] = glSearchParams();
-  // @ts-ignore
   const debounceTimers = useRef<Record<string, NodeJS.Timeout>>({});
 
   const set: ISet = useCallback(
     (key, value) => {
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+
       if (!value && typeof value !== 'number') {
-        searchParams.delete(String(key));
+        newSearchParams.delete(String(key));
       } else {
-        searchParams.set(String(key), String(value));
+        newSearchParams.set(String(key), String(value));
       }
-      setSearchParams(searchParams);
+      setSearchParams(newSearchParams);
     },
     [searchParams, setSearchParams],
   );
 
   const setGroup: ISetGroup = useCallback(
     (keys, values) => {
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+
       if (values === null) {
         if (Array.isArray(keys)) {
           keys.forEach((key) => {
-            searchParams.delete(String(key));
+            newSearchParams.delete(String(key));
           });
-          setSearchParams(searchParams);
+          setSearchParams(newSearchParams);
         }
       } else if (
         Array.isArray(keys) &&
@@ -48,12 +50,12 @@ const useCustomSearchParams = () => {
         keys.forEach((key, index) => {
           const value = values[index];
           if (!value && typeof value !== 'number') {
-            searchParams.delete(String(key));
+            newSearchParams.delete(String(key));
           } else {
-            searchParams.set(String(key), String(value));
+            newSearchParams.set(String(key), String(value));
           }
         });
-        setSearchParams(searchParams);
+        setSearchParams(newSearchParams);
       } else {
         // eslint-disable-next-line no-console
         console.error('Keys and values must be arrays of the same length');
@@ -84,19 +86,33 @@ const useCustomSearchParams = () => {
       }
 
       debounceTimers.current[key] = setTimeout(() => {
+        const newSearchParams = new URLSearchParams(searchParams.toString());
+
         if (!value && typeof value !== 'number') {
-          searchParams.delete(String(key));
+          newSearchParams.delete(String(key));
         } else {
-          searchParams.set(String(key), String(value));
+          newSearchParams.set(String(key), String(value));
         }
-        setSearchParams(searchParams);
+        setSearchParams(newSearchParams);
         delete debounceTimers.current[key];
       }, debounce);
     },
     [searchParams, setSearchParams],
   );
 
-  return { setSearchParams, searchParams, set, get, setWithDebounce, setGroup };
+  const clearAll = useCallback(() => {
+    setSearchParams({});
+  }, [setSearchParams]);
+
+  return {
+    setSearchParams,
+    searchParams,
+    set,
+    get,
+    setWithDebounce,
+    setGroup,
+    clearAll,
+  };
 };
 
 export default useCustomSearchParams;

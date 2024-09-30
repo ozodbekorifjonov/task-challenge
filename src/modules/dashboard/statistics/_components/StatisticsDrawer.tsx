@@ -1,5 +1,5 @@
 import { Table, TableColumnsType, TableProps } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   AntdButton,
@@ -19,17 +19,17 @@ interface IProps {
 
 const columns: TableColumnsType<ISeriesDetails> = [
   {
-    title: 'Name',
-    dataIndex: 'name',
+    title: 'Title',
+    dataIndex: 'title',
     render: (text: string) => <a>{text}</a>,
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
+    title: 'Start date',
+    dataIndex: 'observation_start',
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
+    title: 'End date',
+    dataIndex: 'observation_end',
   },
 ];
 
@@ -48,6 +48,14 @@ const rowSelection: TableProps<ISeriesDetails>['rowSelection'] = {
 };
 
 const StatisticsDrawer = ({ onClose, open }: IProps) => {
+  const { get } = useCustomSearchParams();
+
+  const searchParams = get([RequestConfigAPI.search as string]);
+
+  const [searchValue, setSearchValue] = useState<string>(
+    searchParams[RequestConfigAPI.search] as string,
+  );
+
   const { setWithDebounce } = useCustomSearchParams();
 
   const handleSubmit = () => {
@@ -55,10 +63,14 @@ const StatisticsDrawer = ({ onClose, open }: IProps) => {
   };
 
   const handleChangeSearch: AntInputProps['onChange'] = (e) => {
+    const value = e.target.value;
+
+    setSearchValue(value);
+
     setWithDebounce(
       RequestConfigAPI.search,
-      e.target.value,
-      RequestConfigAPI.paramDelayTime,
+      value,
+      RequestConfigAPI.paramDelayTime500,
     );
   };
 
@@ -93,10 +105,10 @@ const StatisticsDrawer = ({ onClose, open }: IProps) => {
             className='text-neutral40 xl:w-6 xl:h-6 w-5 h-5'
           />
         }
+        value={searchValue}
         placeholder={'Search'}
         onChange={handleChangeSearch}
         className='xl:max-w-[25rem] max-w-[18rem] w-full flex'
-        custom
         theme='gray'
       />
       <div className='mt-6'>
