@@ -16,12 +16,6 @@ export interface ISeriesDetails {
   notes: string;
 }
 
-export interface IStatisticInfo {
-  realtime_start: string;
-  realtime_end: string;
-  seriess: Array<ISeriesDetails>;
-}
-
 export interface IDashboardSliceState {
   seriesList: Array<ISeriesDetails>;
   searchedSeriesResponse: ISearchSeriesResponse | null;

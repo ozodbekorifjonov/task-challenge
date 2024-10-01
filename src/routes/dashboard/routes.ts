@@ -9,9 +9,7 @@ const { removePath } = methodsRemoveMainPath('/dashboard');
 export const dashboardRoutes: Array<IRoutes> = [
   {
     path: `${removePath(paths.dashboard.statistics)}/*`,
-    component: lazy(
-      () => import('../../app/dashboard/statistics/statistics.tsx'),
-    ),
+    component: lazy(() => import('../../routes/dashboard/statistics')),
     permissions: ['readStatistics'],
     forAuth: false,
   },

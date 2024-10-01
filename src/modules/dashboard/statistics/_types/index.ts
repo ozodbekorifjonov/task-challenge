@@ -1,1 +1,1 @@
-export * from './dashboardTypes';
+export * from './statistics.types.ts';

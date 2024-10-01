@@ -1,5 +1,5 @@
 import React, { lazy } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import { dashboardRoutes } from './routes';
 import { renderRoutes } from '../renderRoutes';
@@ -20,7 +20,6 @@ export default function DashboardRoutes(): React.JSX.Element {
             element={<AuthRoute component={<DashboardHome />} forAuth />}
           />
           {renderRoutes(dashboardRoutes)}
-          <Route path='*' element={<Navigate to={'/dashboard'} />} />
         </Routes>
       </React.Suspense>
     </DashboardLayout>
