@@ -18,7 +18,13 @@ const StatisticItem = ({
   </div>
 );
 
-const StatisticInfoCard = ({ series }: { series: ISeriesDetails | null }) => {
+const StatisticInfoCard = ({
+  series,
+  longNote = false,
+}: {
+  series: ISeriesDetails | null;
+  longNote?: boolean;
+}) => {
   const navigate = useNavigate();
 
   if (!series) {
@@ -59,7 +65,7 @@ const StatisticInfoCard = ({ series }: { series: ISeriesDetails | null }) => {
           <StatisticItem
             label='Notes'
             value={series.notes}
-            className='line-clamp-3'
+            className={`${longNote ? '' : 'line-clamp-3'}`}
           />
         )}
       </div>

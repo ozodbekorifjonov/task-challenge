@@ -17,10 +17,6 @@ export interface ISeriesObservations {
   value: string;
 }
 
-export interface ISeriesObservationsRequest {
-  series_id: string;
-}
-
 export interface ISeriesObservationsResponse {
   realtime_start: string;
   realtime_end: string;
@@ -39,10 +35,13 @@ export interface ISeriesObservationsResponse {
 
 export interface IStatisticsDetailsSliceState {
   seriesDetails: ISeriesDetailsResponse | null;
+  seriesObservations: ISeriesObservationsResponse | null;
   isLoading: {
     seriesDetails: boolean;
+    seriesObservations: boolean;
   };
   error: {
     seriesDetails: string;
+    seriesObservations: string;
   };
 }

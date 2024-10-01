@@ -30,7 +30,7 @@ const StatisticDetailsInfo = () => {
   return (
     <Fragment>
       <div className='gap-4'>
-        <StatisticInfoCard series={seriesDetails?.seriess[0]} />
+        <StatisticInfoCard series={seriesDetails?.seriess[0]} longNote={true} />
       </div>
     </Fragment>
   );

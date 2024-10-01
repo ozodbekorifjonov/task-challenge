@@ -3,7 +3,6 @@ import { BaseUrl } from '../../../../../constants';
 import {
   ISeriesDetailsRequest,
   ISeriesDetailsResponse,
-  ISeriesObservationsRequest,
   ISeriesObservationsResponse,
 } from '../_types';
 
@@ -21,7 +20,7 @@ export const seriesDetailsAPI = async (
 };
 
 export const seriesObservationsByIdAPI = async (
-  params: ISeriesObservationsRequest,
+  params: ISeriesDetailsRequest,
 ): Promise<ISeriesObservationsResponse | never> => {
   return await ordersResource({
     method: 'GET',
