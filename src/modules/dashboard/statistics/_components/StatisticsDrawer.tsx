@@ -12,7 +12,11 @@ import useCustomSearchParams from '../../../../hooks/useCustomSearchParams';
 import { RequestConfigAPI } from '../../../../constants';
 import { ISeriesDetails } from '../_types';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks.ts';
-import { addSeriesToSeriesList, selectSearchedStatisticsList } from '../_store';
+import {
+  addSeriesToSeriesList,
+  selectSearchedStatisticsList,
+  selectStatisticsList,
+} from '../_store';
 
 interface IProps {
   open: boolean;
@@ -21,15 +25,15 @@ interface IProps {
 
 const StatisticsDrawer: React.FC<IProps> = ({ onClose, open }) => {
   const { get, setWithDebounce } = useCustomSearchParams();
+  const { seriesList } = useAppSelector(selectStatisticsList);
 
   const searchParams = get(RequestConfigAPI.search);
 
   const initialSearchValue = searchParams[RequestConfigAPI.search] || '';
 
   const [searchValue, setSearchValue] = useState<string>(initialSearchValue);
-  const [selectedSeries, setSelectedSeries] = useState<ISeriesDetails | null>(
-    null,
-  );
+  const [selectedSeries, setSelectedSeries] =
+    useState<Array<ISeriesDetails>>(seriesList);
 
   const { searchedSeriesResponse, isLoadingSearchSeries } = useAppSelector(
     selectSearchedStatisticsList,
@@ -52,19 +56,19 @@ const StatisticsDrawer: React.FC<IProps> = ({ onClose, open }) => {
 
   const handleSubmit = useCallback(() => {
     if (selectedSeries) {
-      dispatch(addSeriesToSeriesList({ newSeries: selectedSeries }));
+      dispatch(addSeriesToSeriesList({ newSeriess: selectedSeries }));
     }
     onClose();
   }, [dispatch, onClose, selectedSeries]);
 
   const rowSelection: TableProps<ISeriesDetails>['rowSelection'] = useMemo(
     () => ({
-      type: 'radio',
+      type: 'checkbox',
       onChange: (
         _selectedRowKeys: React.Key[],
         selectedRows: ISeriesDetails[],
       ) => {
-        setSelectedSeries(selectedRows[0]);
+        setSelectedSeries(selectedRows);
       },
       getCheckboxProps: (record: ISeriesDetails) => ({
         disabled: record.title === 'Disabled User',

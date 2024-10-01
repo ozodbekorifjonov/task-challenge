@@ -6,6 +6,7 @@ import { useAppDispatch } from '../../../../../store/hooks.ts';
 import { fetchingSeriesById, fetchingSeriesObservationsById } from '../_store';
 import StatisticDetailsChart from '../_components/StatisticDetailsChart.tsx';
 import StatisticDetailsInfo from '../_components/StatisticDetailsInfo.tsx';
+import StatisticDetailsTools from '../_components/StatisticDetailsTools.tsx';
 
 const DashboardStatisticDetails = () => {
   const { id } = useParams();
@@ -24,8 +25,9 @@ const DashboardStatisticDetails = () => {
 
   return (
     <Fragment>
-      <StatisticDetailsInfo />
+      <StatisticDetailsTools />
       <StatisticDetailsChart />
+      <StatisticDetailsInfo />
     </Fragment>
   );
 };

@@ -30,7 +30,14 @@ const StatisticDetailsInfo = () => {
   return (
     <Fragment>
       <div className='gap-4'>
-        <StatisticInfoCard series={seriesDetails?.seriess[0]} longNote={true} />
+        <h2 className='text-2xl text-center font-semibold mb-4 text-gray-800'>
+          {seriesDetails?.seriess[0].title}
+        </h2>
+        <StatisticInfoCard
+          showTitle={false}
+          series={seriesDetails?.seriess[0]}
+          longNote={true}
+        />
       </div>
     </Fragment>
   );

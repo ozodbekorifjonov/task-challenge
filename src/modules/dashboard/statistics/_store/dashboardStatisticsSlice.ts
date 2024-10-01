@@ -26,22 +26,48 @@ export const dashboardStatisticsSlice = createSlice({
     // Adding Series to Series list
     addSeriesToSeriesList: (
       state,
-      action: PayloadAction<{ newSeries: ISeriesDetails }>,
+      action: PayloadAction<{ newSeriess: Array<ISeriesDetails> }>,
     ) => {
-      const { newSeries } = action.payload;
-      if (newSeries) {
+      const { newSeriess } = action.payload;
+
+      newSeriess.forEach((newSeries) => {
         const exists = state.seriesList.some(
           (series) => series.id === newSeries.id,
         );
         if (!exists) {
           state.seriesList.push(newSeries);
         } else {
-          toast.warning('This series is already added to the list');
+          toast.warning(`This ${newSeries.title} series already exists`);
         }
+      });
+    },
+
+    // Editing a Series title
+    editSeriesTitle: (
+      state,
+      action: PayloadAction<{ id: string; newTitle: string }>,
+    ) => {
+      const { id, newTitle } = action.payload;
+      const series = state.seriesList.find((series) => series.id === id);
+      if (series) {
+        series.title = newTitle;
+      } else {
+        toast.warning(`Series with id ${id} does not exist.`);
       }
     },
 
-    // Searching Seriess by title
+    // Deleting a Series by id
+    deleteSeriesById: (state, action: PayloadAction<{ id: string }>) => {
+      const { id } = action.payload;
+      const index = state.seriesList.findIndex((series) => series.id === id);
+      if (index !== -1) {
+        state.seriesList.splice(index, 1);
+      } else {
+        toast.warning(`Series with id ${id} does not exist.`);
+      }
+    },
+
+    // Searching Series by title
     searchSeriesByName: (
       state,
       _action: PayloadAction<ISearchSeriesRequest>,
@@ -66,4 +92,6 @@ export const {
   addSeriesToSeriesList,
   searchSeriesByName,
   setSearchedSeriesListState,
+  editSeriesTitle,
+  deleteSeriesById,
 } = dashboardStatisticsSlice.actions;

@@ -18,3 +18,17 @@ export const selectStatisticDetails = createSelector(
     };
   },
 );
+
+export const selectStatisticObservations = createSelector(
+  [selectStatisticsDetailsState],
+  (statisticsDetailsStore) => {
+    const seriesObservations = statisticsDetailsStore.seriesObservations;
+    const isLoadingSeriesObservations =
+      statisticsDetailsStore.isLoading.seriesObservations;
+
+    return {
+      seriesObservations,
+      isLoadingSeriesObservations,
+    };
+  },
+);

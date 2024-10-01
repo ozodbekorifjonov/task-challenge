@@ -21,9 +21,11 @@ const StatisticItem = ({
 const StatisticInfoCard = ({
   series,
   longNote = false,
+  showTitle = true,
 }: {
   series: ISeriesDetails | null;
   longNote?: boolean;
+  showTitle?: boolean;
 }) => {
   const navigate = useNavigate();
 
@@ -44,9 +46,11 @@ const StatisticInfoCard = ({
       onClick={() => handleNavigate(series?.id)}
       className='xl:rounded-[1.5rem] rounded-[1rem] overflow-hidden border border-gray-200 shadow-md flex flex-col relative cursor-pointer p-6 bg-white'
     >
-      <h2 className='text-2xl font-semibold mb-4 text-gray-800'>
-        {series.title}
-      </h2>
+      {showTitle && (
+        <h2 className='text-2xl font-semibold mb-4 text-gray-800'>
+          {series.title}
+        </h2>
+      )}
       <div>
         <StatisticItem label='ID' value={series.id} />
         <StatisticItem label='Units' value={series.units} />

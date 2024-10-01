@@ -1,7 +1,5 @@
 import React, { ComponentType, LazyExoticComponent } from 'react';
-
 import { ColumnsType } from 'antd/es/table';
-
 import { SkeletonProps } from 'antd';
 
 export type { AntMenuProps, AntSubMenuProps } from '../lib/AntMenu';
@@ -9,7 +7,6 @@ export type { AntTableProps, AntTableColumnsType } from '../lib/AntTable';
 export type { AntListItemProps, AntListProps } from '../lib/AntList';
 export type { AntPopoverProps } from '../lib/AntPopover';
 export type { AntDividerProps } from '../lib/AntDivider';
-export type { AntQRCodeProps } from '../lib/AntQRCode';
 export type { AntInputNumberProps } from '../lib/AntInputNumber';
 export type {
   AntSkeletonAvatarProps,
@@ -47,16 +44,11 @@ export type { AntTooltipProps } from '../lib/AntTooltip';
 export type { AntAlertProps } from '../lib/AntAlert';
 export type { AntModalProps } from '../lib/AntModal';
 export type {
-  AntCascaderProps,
-  AntDefaultOptionType,
-} from '../lib/AntCascader';
-export type {
   AntCheckboxGroupProps,
   AntCheckboxProps,
 } from '../lib/AntCheckbox';
 export type { AntBadgeProps, AntBadgeRibbonProps } from '../lib/AntBadge';
 export type { AntSwitchProps } from '../lib/AntSwitch';
-export type { AntBreadcrumbProps } from '../lib/AntBreadcrumb';
 export type { AntDropdownProps } from '../lib/AntDropdown';
 export type { AntImageProps } from '../lib/AntImage';
 export type { AntLayoutProps, AntSiderProps } from '../lib/AntLayout';

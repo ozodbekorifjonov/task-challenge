@@ -3,7 +3,7 @@ import ReactApexChart from 'react-apexcharts';
 
 type SeriesItem = {
   name: string;
-  data: Array<number>;
+  data: Array<{ x: string; y: number }>;
 };
 
 type Props = {
@@ -18,8 +18,8 @@ function LineChart(props: Props) {
     <ReactApexChart
       options={options}
       series={series}
-      type={'area'}
-      height={'100%'}
+      type='area'
+      height='100%'
     />
   );
 }
