@@ -11,8 +11,8 @@ import { Icon, IconName } from '../../../../icons/src';
 import useCustomSearchParams from '../../../../hooks/useCustomSearchParams';
 import { RequestConfigAPI } from '../../../../constants';
 import { ISeriesDetails } from '../_types';
-import { useAppSelector } from '../../../../store/hooks.ts';
-import { selectSearchedStatisticsList } from '../_store';
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks.ts';
+import { addSeriesToSeriesList, selectSearchedStatisticsList } from '../_store';
 
 interface IProps {
   open: boolean;
@@ -27,10 +27,15 @@ const StatisticsDrawer: React.FC<IProps> = ({ onClose, open }) => {
   const initialSearchValue = searchParams[RequestConfigAPI.search] || '';
 
   const [searchValue, setSearchValue] = useState<string>(initialSearchValue);
+  const [selectedSeries, setSelectedSeries] = useState<ISeriesDetails | null>(
+    null,
+  );
 
   const { searchedSeriesResponse, isLoadingSearchSeries } = useAppSelector(
     selectSearchedStatisticsList,
   );
+
+  const dispatch = useAppDispatch();
 
   const handleChangeSearch: AntInputProps['onChange'] = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,21 +51,20 @@ const StatisticsDrawer: React.FC<IProps> = ({ onClose, open }) => {
   );
 
   const handleSubmit = useCallback(() => {
+    if (selectedSeries) {
+      dispatch(addSeriesToSeriesList({ newSeries: selectedSeries }));
+    }
     onClose();
-  }, [onClose]);
+  }, [dispatch, onClose, selectedSeries]);
 
   const rowSelection: TableProps<ISeriesDetails>['rowSelection'] = useMemo(
     () => ({
       type: 'radio',
       onChange: (
-        selectedRowKeys: React.Key[],
+        _selectedRowKeys: React.Key[],
         selectedRows: ISeriesDetails[],
       ) => {
-        console.log(
-          `selectedRowKeys: ${selectedRowKeys}`,
-          'selectedRows: ',
-          selectedRows,
-        );
+        setSelectedSeries(selectedRows[0]);
       },
       getCheckboxProps: (record: ISeriesDetails) => ({
         disabled: record.title === 'Disabled User',
@@ -100,7 +104,12 @@ const StatisticsDrawer: React.FC<IProps> = ({ onClose, open }) => {
           <AntdButton onClick={onClose} type='text' danger theme='success'>
             Close
           </AntdButton>
-          <AntdButton onClick={handleSubmit} type='primary' theme='success'>
+          <AntdButton
+            disabled={selectedSeries === null}
+            onClick={handleSubmit}
+            type='primary'
+            theme='success'
+          >
             Add
           </AntdButton>
         </div>

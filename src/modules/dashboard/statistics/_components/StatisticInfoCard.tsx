@@ -1,34 +1,28 @@
-import { IStatisticInfo } from '../_types';
+import { ISeriesDetails } from '../_types';
 
 const StatisticItem = ({
   label,
   value,
+  className,
 }: {
   label: string;
   value: string | number;
+  className?: string;
 }) => (
   <div className='flex mb-2 justify-between'>
     <span className='font-medium w-40'>{label}:</span>
-    <span className='text-gray-700'>{value}</span>
+    <span className={`text-gray-700 ${className}`}>{value}</span>
   </div>
 );
 
-const StatisticInfoCard = ({
-  data,
-}: {
-  data: IStatisticInfo | null;
-}) => {
-  if (!data) {
+const StatisticInfoCard = ({ series }: { series: ISeriesDetails | null }) => {
+  if (!series) {
     return null;
   }
 
-  const { seriess } = data;
-
-  if (!seriess || !seriess.length) {
+  if (!series) {
     return <div>No series data available.</div>;
   }
-
-  const series = seriess[0];
 
   return (
     <div className='xl:rounded-[1.5rem] rounded-[1rem] overflow-hidden border border-gray-200 shadow-md flex flex-col relative cursor-pointer p-6 bg-white'>
@@ -49,7 +43,13 @@ const StatisticInfoCard = ({
           value={new Date(series.last_updated).toLocaleDateString()}
         />
         <StatisticItem label='Popularity' value={series.popularity} />
-        {series.notes && <StatisticItem label='Notes' value={series.notes} />}
+        {series.notes && (
+          <StatisticItem
+            label='Notes'
+            value={series.notes}
+            className='line-clamp-3'
+          />
+        )}
       </div>
     </div>
   );

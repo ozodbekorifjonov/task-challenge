@@ -23,7 +23,7 @@ export interface IStatisticInfo {
 }
 
 export interface IDashboardSliceState {
-  seriesList: Array<IStatisticInfo>;
+  seriesList: Array<ISeriesDetails>;
   searchedSeriesResponse: ISearchSeriesResponse | null;
   isLoading: {
     searchSeries: boolean;
