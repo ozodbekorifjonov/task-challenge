@@ -7,7 +7,7 @@ export const menuItems = [
     key: paths.dashboard.statistics,
     icon: <Icon name={IconName.PieChart} size={IconSize.Lg} className='icon' />,
     label: (
-      <MenuItemLabel href={paths.dashboard.statistics} value='Statistics' />
+      <MenuItemLabel href={paths.dashboard.statistics} value='StatisticDetails' />
     ),
   },
 ];

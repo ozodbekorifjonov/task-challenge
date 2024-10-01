@@ -1,4 +1,7 @@
+import { useNavigate } from 'react-router-dom';
+
 import { ISeriesDetails } from '../_types';
+import { paths } from '../../../../routes/paths';
 
 const StatisticItem = ({
   label,
@@ -16,6 +19,8 @@ const StatisticItem = ({
 );
 
 const StatisticInfoCard = ({ series }: { series: ISeriesDetails | null }) => {
+  const navigate = useNavigate();
+
   if (!series) {
     return null;
   }
@@ -24,8 +29,15 @@ const StatisticInfoCard = ({ series }: { series: ISeriesDetails | null }) => {
     return <div>No series data available.</div>;
   }
 
+  const handleNavigate = (id: string) => {
+    navigate(`${paths.dashboard.statistics}/${id}`);
+  };
+
   return (
-    <div className='xl:rounded-[1.5rem] rounded-[1rem] overflow-hidden border border-gray-200 shadow-md flex flex-col relative cursor-pointer p-6 bg-white'>
+    <div
+      onClick={() => handleNavigate(series?.id)}
+      className='xl:rounded-[1.5rem] rounded-[1rem] overflow-hidden border border-gray-200 shadow-md flex flex-col relative cursor-pointer p-6 bg-white'
+    >
       <h2 className='text-2xl font-semibold mb-4 text-gray-800'>
         {series.title}
       </h2>
