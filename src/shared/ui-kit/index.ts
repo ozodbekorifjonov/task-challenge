@@ -1,7 +1,7 @@
 export { AntdButton } from './lib/AntdButton';
 export { PermissionsDenied } from './lib/PermissionsDenied';
 export { AntdProvider } from './lib/antd-provider';
-export { LineChart, DonutChart, RadialChart } from './lib/Charts';
+export { LineChart, Chart } from './lib/Charts';
 export { Loading } from './lib/Loading';
 export { SkeletonTable } from './lib/SkeletonTable';
 export { AntDropdown } from './lib/AntDropdown';
