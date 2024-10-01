@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved,import/namespace,import/default
 import react from '@vitejs/plugin-react';
 import { defineConfig, loadEnv } from 'vite';
 import { VitePWA, VitePWAOptions } from 'vite-plugin-pwa';

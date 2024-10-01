@@ -1,18 +1,35 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { AntdButton } from '../../../../shared/ui-kit';
 import StatisticsDrawer from './StatisticsDrawer.tsx';
 import { RequestConfigAPI } from '../../../../constants';
 import useCustomSearchParams from '../../../../hooks/useCustomSearchParams.tsx';
+import { ISearchSeriesRequest } from '../_types';
+import { useAppDispatch } from '../../../../store/hooks.ts';
+import { searchSeriesByName } from '../_store';
 
 const StatisticsTools = () => {
+  const dispatch = useAppDispatch();
   const { get, setWithDebounce, clearAll } = useCustomSearchParams();
 
-  const searchParams = get([RequestConfigAPI.drawerOpen as string]);
+  const searchParams = get([
+    RequestConfigAPI.drawerOpen as string,
+    RequestConfigAPI.search as string,
+  ]);
 
-  const [open, setOpen] = useState<boolean>(
-    Boolean(searchParams[RequestConfigAPI.drawerOpen]),
-  );
+  const drawerParam = searchParams[RequestConfigAPI.drawerOpen];
+  const searchParam = searchParams[RequestConfigAPI.search];
+
+  const [open, setOpen] = useState<boolean>(Boolean(drawerParam));
+
+  useEffect(() => {
+    if (searchParam) {
+      const request: ISearchSeriesRequest = {
+        search_text: searchParam,
+      };
+      dispatch(searchSeriesByName(request));
+    }
+  }, [searchParams, dispatch, get, searchParam]);
 
   const onOpenDrawer = () => {
     setWithDebounce(

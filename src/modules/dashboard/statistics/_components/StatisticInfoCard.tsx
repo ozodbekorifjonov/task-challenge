@@ -13,7 +13,11 @@ const StatisticItem = ({
   </div>
 );
 
-const StatisticInfoCard = ({ data }: { data: IStatisticInfo | null }) => {
+const StatisticInfoCard = ({
+  data,
+}: {
+  data: IStatisticInfo | null;
+}) => {
   if (!data) {
     return null;
   }

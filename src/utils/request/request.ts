@@ -75,6 +75,8 @@ export default async function request<Result, Meta = Record<string, never>>(
     url += `?${queryString}`;
   }
 
+  url += `&api_key=${import.meta.env.VITE_BASE_API_KEY}&file_type=json`;
+
   const headers: RequestHeaders = {
     Accept: 'application/json',
   };

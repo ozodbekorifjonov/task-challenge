@@ -15,3 +15,16 @@ export const selectStatisticsList = createSelector(
     };
   },
 );
+
+export const selectSearchedStatisticsList = createSelector(
+  [selectStatisticsState],
+  (statisticsStore) => {
+    const searchedSeriesResponse = statisticsStore.searchedSeriesResponse;
+    const isLoadingSearchSeries = statisticsStore.isLoading.searchSeries;
+
+    return {
+      searchedSeriesResponse,
+      isLoadingSearchSeries,
+    };
+  },
+);

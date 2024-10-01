@@ -1,5 +1,5 @@
+import React, { useCallback, useMemo, useState } from 'react';
 import { Table, TableColumnsType, TableProps } from 'antd';
-import React, { useState } from 'react';
 
 import {
   AntdButton,
@@ -8,84 +8,96 @@ import {
   AntInputProps,
 } from '../../../../shared/ui-kit';
 import { Icon, IconName } from '../../../../icons/src';
-import useCustomSearchParams from '../../../../hooks/useCustomSearchParams.tsx';
+import useCustomSearchParams from '../../../../hooks/useCustomSearchParams';
 import { RequestConfigAPI } from '../../../../constants';
 import { ISeriesDetails } from '../_types';
+import { useAppSelector } from '../../../../store/hooks.ts';
+import { selectSearchedStatisticsList } from '../_store';
 
 interface IProps {
   open: boolean;
   onClose: () => void;
 }
 
-const columns: TableColumnsType<ISeriesDetails> = [
-  {
-    title: 'Title',
-    dataIndex: 'title',
-    render: (text: string) => <a>{text}</a>,
-  },
-  {
-    title: 'Start date',
-    dataIndex: 'observation_start',
-  },
-  {
-    title: 'End date',
-    dataIndex: 'observation_end',
-  },
-];
+const StatisticsDrawer: React.FC<IProps> = ({ onClose, open }) => {
+  const { get, setWithDebounce } = useCustomSearchParams();
 
-const rowSelection: TableProps<ISeriesDetails>['rowSelection'] = {
-  onChange: (selectedRowKeys: React.Key[], selectedRows: ISeriesDetails[]) => {
-    console.log(
-      `selectedRowKeys: ${selectedRowKeys}`,
-      'selectedRows: ',
-      selectedRows,
-    );
-  },
-  getCheckboxProps: (record: ISeriesDetails) => ({
-    disabled: record.title === 'Disabled User',
-    name: record.title,
-  }),
-};
+  const searchParams = get(RequestConfigAPI.search);
 
-const StatisticsDrawer = ({ onClose, open }: IProps) => {
-  const { get } = useCustomSearchParams();
+  const initialSearchValue = searchParams[RequestConfigAPI.search] || '';
 
-  const searchParams = get([RequestConfigAPI.search as string]);
+  const [searchValue, setSearchValue] = useState<string>(initialSearchValue);
 
-  const [searchValue, setSearchValue] = useState<string>(
-    searchParams[RequestConfigAPI.search] as string,
+  const { searchedSeriesResponse, isLoadingSearchSeries } = useAppSelector(
+    selectSearchedStatisticsList,
   );
 
-  const { setWithDebounce } = useCustomSearchParams();
+  const handleChangeSearch: AntInputProps['onChange'] = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setSearchValue(value);
+      setWithDebounce(
+        RequestConfigAPI.search,
+        value,
+        RequestConfigAPI.paramDelayTime500,
+      );
+    },
+    [setWithDebounce],
+  );
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     onClose();
-  };
+  }, [onClose]);
 
-  const handleChangeSearch: AntInputProps['onChange'] = (e) => {
-    const value = e.target.value;
+  const rowSelection: TableProps<ISeriesDetails>['rowSelection'] = useMemo(
+    () => ({
+      type: 'radio',
+      onChange: (
+        selectedRowKeys: React.Key[],
+        selectedRows: ISeriesDetails[],
+      ) => {
+        console.log(
+          `selectedRowKeys: ${selectedRowKeys}`,
+          'selectedRows: ',
+          selectedRows,
+        );
+      },
+      getCheckboxProps: (record: ISeriesDetails) => ({
+        disabled: record.title === 'Disabled User',
+        name: record.title,
+      }),
+    }),
+    [],
+  );
 
-    setSearchValue(value);
-
-    setWithDebounce(
-      RequestConfigAPI.search,
-      value,
-      RequestConfigAPI.paramDelayTime500,
-    );
-  };
+  const columns: TableColumnsType<ISeriesDetails> = useMemo(
+    () => [
+      {
+        title: 'Title',
+        dataIndex: 'title',
+        render: (text: string) => <span>{text}</span>,
+      },
+      {
+        title: 'Start Date',
+        dataIndex: 'observation_start',
+        render: (date: string) => new Date(date).toLocaleDateString(),
+      },
+      {
+        title: 'End Date',
+        dataIndex: 'observation_end',
+        render: (date: string) => new Date(date).toLocaleDateString(),
+      },
+    ],
+    [],
+  );
 
   return (
     <AntDrawer
-      title={'Adding a chart'}
+      title='Adding a Chart'
       open={open}
       footer={
         <div className='flex items-center justify-end gap-4'>
-          <AntdButton
-            onClick={() => onClose()}
-            type='text'
-            danger
-            theme='success'
-          >
+          <AntdButton onClick={onClose} type='text' danger theme='success'>
             Close
           </AntdButton>
           <AntdButton onClick={handleSubmit} type='primary' theme='success'>
@@ -106,16 +118,20 @@ const StatisticsDrawer = ({ onClose, open }: IProps) => {
           />
         }
         value={searchValue}
-        placeholder={'Search'}
+        placeholder='Search for data series'
         onChange={handleChangeSearch}
         className='xl:max-w-[25rem] max-w-[18rem] w-full flex'
         theme='gray'
+        aria-label='Search for data series'
       />
       <div className='mt-6'>
         <Table<ISeriesDetails>
-          rowSelection={{ type: 'radio', ...rowSelection }}
+          rowSelection={rowSelection}
           columns={columns}
-          dataSource={[]}
+          loading={isLoadingSearchSeries}
+          dataSource={searchedSeriesResponse?.seriess}
+          rowKey='id'
+          pagination={{ pageSize: 10, showSizeChanger: true }}
         />
       </div>
     </AntDrawer>
